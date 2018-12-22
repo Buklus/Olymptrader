@@ -40,7 +40,13 @@ def send_to_telegram_db(message):
 display = Display(visible=0, size=(1928, 1060))
 display.start()
 
-driver = webdriver.Chrome()
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--window-size=1420,1080')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
+driver = webdriver.Chrome(chrome_options=chrome_options)
 
 
 url = 'http://christopher.su'
@@ -382,9 +388,9 @@ except Exception as e:
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '12:35:55':
+    if time.strftime("%X") > '12:55:55':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="12:50" )
+        database = run_bot( deadline="13:20" )
         break
 
 driver.quit()
