@@ -6,17 +6,7 @@ google-compute-engine-selenium
 3.	ssh into your instance after it's been setup
 4.	issue the following commands:
 
-```
-wget https://raw.githubusercontent.com/garywu/gae-selenium/master/install.sh && chmod +x install.sh && ./install.sh &&  ./start_headless.sh && ./demo.py
-```
+You got this.
 
-...after about 5 minutes, you should see
-
-```
-browsing with firefox, http://www.python.org
-Welcome to Python.org
-browsing with chrome, http://www.python.org
-Welcome to Python.org
-```
-
-that means you've succeeded.
+https://christopher.su/2015/selenium-chromedriver-ubuntu/ - Got intstructions here.
+Used: wget -N http://chromedriver.storage.googleapis.com/2.45/chromedriver_linux64.zip
