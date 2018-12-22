@@ -389,9 +389,9 @@ except Exception as e:
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '13:40:00':
+    if time.strftime("%X") > '13:50:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="23:59" )
+        database = run_bot( deadline="22:59" )
         break
 
 driver.quit()
