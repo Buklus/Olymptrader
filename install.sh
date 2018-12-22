@@ -97,9 +97,9 @@ sudo apt-get -f install -y --force-yes
 sudo easy_install pip
 
 # get python dependency
-wget -O requirements.txt https://raw.githubusercontent.com/garywu/gae-selenium/master/requirements.txt
+wget -O requirements.txt https://github.com/Buklus/Olymptrader/blob/master/requirements.txt
 sudo pip install -r requirements.txt
-wget -O demo.py https://raw.githubusercontent.com/garywu/gae-selenium/master/demo.py
-chmod +x demo.py
-wget -O start_headless.sh https://raw.githubusercontent.com/garywu/gae-selenium/master/start_headless.sh
+wget -O bot.py https://github.com/Buklus/Olymptrader/blob/master/bot.py
+chmod +x bot.py
+wget -O start_headless.sh https://github.com/Buklus/Olymptrader/blob/master/start_headless.sh
 chmod +x start_headless.sh
