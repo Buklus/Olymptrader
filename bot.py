@@ -386,7 +386,7 @@ except Exception as e:
         driver.quit()
         sys.exit()
 
-send_telegram_image(user_id, "out.png")
+send_telegram_image(kingsley_telegram_id, "out.png")
 
 #time.strftime('%X %x %Z')
 #Start when time is 6:19am meaning 5:19am
