@@ -395,9 +395,9 @@ send_telegram_image(kingsley_telegram_id, "out.png")
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '04:49:00':
+    if time.strftime("%X") > '05:10:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="04:56" )
+        database = run_bot( deadline="05:20" )
         break
 
 driver.quit()
