@@ -386,14 +386,16 @@ except Exception as e:
         driver.quit()
         sys.exit()
 
+send_telegram_image(user_id, "out.png")
+
 #time.strftime('%X %x %Z')
 #Start when time is 6:19am meaning 5:19am
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '04:35:00':
+    if time.strftime("%X") > '04:49:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="04:51" )
+        database = run_bot( deadline="04:56" )
         break
 
 driver.quit()
