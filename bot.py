@@ -223,9 +223,11 @@ def run_bot( deadline="06:00" ):
         #Wait for 62 to check if trade is successful:
         time.sleep(62)
         
+        last_time = time.time()
+        
         #Save screenshot after 90 seconds to send later below:
         #driver.save_screenshot("shot{}.png".format(shot_num))
-                
+        
         #Check balance:
         old_balance = account_balance
 
@@ -247,13 +249,13 @@ def run_bot( deadline="06:00" ):
             bot_message = '{} For trade of ${} at {} {}'.format(good_check, amount_to_deal, trade_time, arrow)
             send_telegram_message(kingsley_telegram_id, bot_message)
             # send_telegram_message(efosa_telegram_id, bot_message)
-            send_telegram_message( bukunmi_telegram_id, bot_message )
+            # send_telegram_message( bukunmi_telegram_id, bot_message )
             streak.append("w")
     
             lst = [rate_of_return, float(amount_to_deal), "w", trade_time, get_colour, account_balance, current_day]
             for_database.append(lst)
             #Post data to restdb:
-            post_data(lst)
+            # post_data(lst)
             
         elif account_balance < old_balance:
             print("Loss Trade")
@@ -262,13 +264,13 @@ def run_bot( deadline="06:00" ):
             bot_message = '{} For trade of ${} at {} {}'.format(x_check, amount_to_deal, trade_time, arrow)
             send_telegram_message(kingsley_telegram_id, bot_message)
             # send_telegram_message(efosa_telegram_id, bot_message)
-            send_telegram_message( bukunmi_telegram_id, bot_message )
+            # send_telegram_message( bukunmi_telegram_id, bot_message )
             streak.append("l")
     
             lst = [rate_of_return, float(amount_to_deal), "l", trade_time, get_colour, account_balance, current_day]
             for_database.append(lst)
             #Post data to restdb:
-            post_data(lst)
+            # post_data(lst)
             
         elif account_balance == old_balance:
             #ignore and continue if account balance is still same for whatever reason after trade.
@@ -277,13 +279,13 @@ def run_bot( deadline="06:00" ):
             bot_message = '{} For trade of ${} at {} {}'.format('--', amount_to_deal, trade_time, arrow)
             send_telegram_message(kingsley_telegram_id, bot_message)
             # send_telegram_message(efosa_telegram_id, bot_message)
-            send_telegram_message( bukunmi_telegram_id, bot_message )
+            # send_telegram_message( bukunmi_telegram_id, bot_message )
             streak.append("-")
     
             lst = [rate_of_return, float(amount_to_deal), "-", trade_time, get_colour, account_balance, current_day]
             for_database.append(lst)
             #Post data to restdb:
-            post_data(lst)
+            # post_data(lst)
             
         
         #Check if losses is up to 5:
@@ -294,12 +296,12 @@ def run_bot( deadline="06:00" ):
             bot_message = "There has been losses made for over 10 trades.\nBot has been stopped.\nAccount balance: ${}".format(account_balance)
             send_telegram_message( kingsley_telegram_id, bot_message )
             # send_telegram_message(efosa_telegram_id, bot_message)
-            send_telegram_message( bukunmi_telegram_id, bot_message )
+            # send_telegram_message( bukunmi_telegram_id, bot_message )
             driver.quit()
             
         print("Number of losses so far:", len(losses))
         #Wait for another 56 seconds before next trade: In hopes that it sums up to exactly 10 seconds.
-        time.sleep(56)
+        time.sleep( 59- (time.time() - last_time) )
     
     #Convert deadline to true value for Nigerian time (1 hour +).
     nigerian_deadline = str( int(deadline.split(":")[0]) + 1 ) + ":" + deadline.split(":")[1]
@@ -311,12 +313,12 @@ def run_bot( deadline="06:00" ):
     bot_message = "Ripple currency Trade session has started with Google Compute Engine.\n From {} till {}".format(bot_start_time, nigerian_deadline)
     send_telegram_message( kingsley_telegram_id, bot_message )
     # send_telegram_message(efosa_telegram_id, bot_message)
-    send_telegram_message( bukunmi_telegram_id, bot_message )
+    # send_telegram_message( bukunmi_telegram_id, bot_message )
     
     bot_message = "Account balance at start of session: ${}".format(session_starting_balance)
     send_telegram_message( kingsley_telegram_id, bot_message)
     # send_telegram_message(efosa_telegram_id, bot_message)
-    send_telegram_message( bukunmi_telegram_id, bot_message )
+    # send_telegram_message( bukunmi_telegram_id, bot_message )
     
     #While time has not been reached or passed:
     try:
@@ -328,7 +330,7 @@ def run_bot( deadline="06:00" ):
             bot_message = "Trade deadline of {} exceeded!".format(nigerian_deadline)
             send_telegram_message( kingsley_telegram_id, bot_message)
             # send_telegram_message(efosa_telegram_id, bot_message)
-            send_telegram_message( bukunmi_telegram_id, bot_message )
+            # send_telegram_message( bukunmi_telegram_id, bot_message )
 
             #Keep placing trades until all losses are cleared:
             if len(losses) != 0:
@@ -343,17 +345,17 @@ def run_bot( deadline="06:00" ):
                 bot_message = "Trading session has ended."
                 send_telegram_message( kingsley_telegram_id, bot_message)
                 # send_telegram_message(efosa_telegram_id, bot_message)
-                send_telegram_message( bukunmi_telegram_id, bot_message )
+                # send_telegram_message( bukunmi_telegram_id, bot_message )
                 
                 send_telegram_message(kingsley_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
                 # send_telegram_message(efosa_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
-                send_telegram_message(bukunmi_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
+                # send_telegram_message(bukunmi_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
                 
                 bot_message = "Total profit made at end of session is: ${}".format(round(session_ending_balance - session_starting_balance,2))
                 print(bot_message)
                 send_telegram_message( kingsley_telegram_id, bot_message )
                 # send_telegram_message(efosa_telegram_id, bot_message)
-                send_telegram_message( bukunmi_telegram_id, bot_text )
+                # send_telegram_message( bukunmi_telegram_id, bot_text )
 
                 print("Streaks:", streak)
     except Exception as e:
@@ -362,7 +364,7 @@ def run_bot( deadline="06:00" ):
         print(e)
         print("Program stoppped.")
         send_telegram_message( kingsley_telegram_id, str(e) )
-        send_telegram_message( bukunmi_telegram_id, "Program stoppped by admin." )
+        # send_telegram_message( bukunmi_telegram_id, "Program stoppped by admin." )
     
     return for_database
 
@@ -389,9 +391,9 @@ except Exception as e:
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '13:50:00':
+    if time.strftime("%X") > '03:57:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="22:59" )
+        database = run_bot( deadline="04:02" )
         break
 
 driver.quit()
