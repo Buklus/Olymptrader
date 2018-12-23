@@ -371,6 +371,8 @@ def run_bot( deadline="06:00" ):
 
 login_function(driver, account_mail, account_password)
 
+time.sleep(10)
+
 try:
     driver.save_screenshot("out.png")
 except Exception as e:
