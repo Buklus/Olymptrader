@@ -3,7 +3,7 @@ from selenium import webdriver
 import time, sys, pickle
 from selenium.webdriver.common.keys import Keys
 
-import telegram, requests, json, sys
+import telegram, requests, json, sys, pickle
 
 telegram_token = "754942247:AAG8gXODpV5nG6LOUApghhgWlxABJK9fUIc"
 
@@ -88,8 +88,8 @@ def set_timeframe(driver, num_minutes='1'):
 
 def set_deal_amount(driver, value='1'):
     value = str(value)#Input control. Must be in string not int or float.
-    if float(value) < 1:
-        raise Exception("Deal amount cannot be less than 1")
+    # if float(value) < 1:
+        # raise Exception("Deal amount cannot be less than 1")
     
     deal_amount = driver.find_element_by_class_name('input-currency__input')
     #Set deal amount:
@@ -134,8 +134,8 @@ def time_reached( to_check="06:00" ):
 
 #Disadvantage of using xpath cos of screen size. [don't use it blindly.]
 def get_rate():
-    #btn = driver.find_element_by_xpath('//*[@id="pair-managing-add-btn"]/span[2]')
-    btn = driver.find_element_by_xpath('//*[@id="pm-v1-XRPUSD"]/div[1]/span[2]')
+    btn = driver.find_element_by_xpath('//*[@id="pair-managing-add-btn"]/span[2]')
+    # btn = driver.find_element_by_xpath('//*[@id="pm-v1-XRPUSD"]/div[1]/span[2]')
     rate = float( btn.text.replace("%", "") )
     return rate
 
@@ -158,7 +158,12 @@ def post_data(lst):
 
 
 #This is the code for the second table at 82%
-losses = []
+# losses = []
+# db = pickledb.load('list.db', False)
+# losses = db.get('list')
+with open('list.pkl', 'rb') as f:
+    losses = pickle.load(f)
+    
 shot_num = 0
 
 opposite_dict = { "green":"red", "red":"green" }#To switch trade deals placed.
@@ -196,9 +201,9 @@ def run_bot( deadline="06:00" ):
         #Making sure deal_amount is correct.
         set_timeframe( driver, num_minutes='1' )
         set_deal_amount( driver, value=amount_to_deal )
-        
         get_colour = opposite_dict[colour]
         rate_of_return = get_rate()#Get current rate to click.
+        print(rate_of_return)
         click_green_or_red( to_click=get_colour )
         colour = get_colour #To switch colour.
                 
@@ -294,6 +299,10 @@ def run_bot( deadline="06:00" ):
             driver.quit()
             
         print("Number of losses so far:", len(losses))
+        
+        with open('list.pkl', 'wb') as f:
+            pickle.dump(losses, f)
+        
         #Wait for another 56 seconds before next trade: In hopes that it sums up to exactly 10 seconds.
         time.sleep( 59- (time.time() - last_time) )
     
@@ -392,9 +401,9 @@ send_telegram_image(kingsley_telegram_id, "out.png")
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '03:27:00':
+    if time.strftime("%X") > '04:09:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="03:40" )
+        database = run_bot( deadline="04:18" )
         break
 
 driver.quit()
