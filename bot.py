@@ -134,10 +134,10 @@ def time_reached( to_check="06:00" ):
 
 #Disadvantage of using xpath cos of screen size. [don't use it blindly.]
 def get_rate():
-    btn = driver.find_element_by_xpath('//*[@id="pair-managing-add-btn"]/span[2]')
+    #btn = driver.find_element_by_xpath('//*[@id="pair-managing-add-btn"]/span[2]')
     # btn = driver.find_element_by_xpath('//*[@id="pm-v1-XRPUSD"]/div[1]/span[2]')
-    rate = float( btn.text.replace("%", "") )
-    return rate
+    #rate = float( btn.text.replace("%", "") )
+    return float(82)
 
 
 # URL to restdb.io database
@@ -401,9 +401,9 @@ send_telegram_image(kingsley_telegram_id, "out.png")
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '04:19:00':
+    if time.strftime("%X") > '04:26:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="04:31" )
+        database = run_bot( deadline="04:37" )
         break
 
 driver.quit()
