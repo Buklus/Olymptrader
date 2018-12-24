@@ -70,24 +70,18 @@ account_password = "gabriel2009"
 
 def get_balance_info(driver):
     balance_info = driver.find_element_by_xpath('//*[@id="header"]/div/div[3]/div[1]/button')
-    
     #balance_info.text format: 'Demo account\n10 000.00 a\n '
-    
     account_type = balance_info.text.split("\n")[0]
-    
     account_balance = balance_info.text.split("\n")[1]
     account_balance = float( "".join(i for i in account_balance.split()[:2]) ) #Remove the last letter(possibly representing currency).
-    
     return account_type, account_balance
 
 def set_timeframe(driver, num_minutes='1'):
     num = driver.find_element_by_css_selector(".timeinput__input.timeinput__input_minutes")    
-
     #Setting num to 1:
     num.send_keys(Keys.CONTROL,'a')
     num.send_keys(Keys.DELETE)
     num.send_keys('1')
-    
     #Set value for timeframe to min:
     #timeframe = driver.find_element_by_xpath('//*[@id="opcion"]/div[1]/div[2]/div/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div/div[1]/span/span[2]/span/span')
     #driver.execute_script('arguments[0].innerHTML = "min";', timeframe)
@@ -310,13 +304,13 @@ def run_bot( deadline="06:00" ):
     to_nigerian_time = str( int(bot_start_time.split(":")[0]) +1) + ":" + bot_start_time.split(":")[1]
     bot_start_time = to_nigerian_time #Converting to Nigerian current time. [1 hour +]
     
-    bot_message = "Ripple currency Trade session has started with Google Compute Engine.\n From {} till {}".format(bot_start_time, nigerian_deadline)
-    send_telegram_message( kingsley_telegram_id, bot_message )
+    # bot_message = "Ripple currency Trade session has started with Google Compute Engine.\n From {} till {}".format(bot_start_time, nigerian_deadline)
+    # send_telegram_message( kingsley_telegram_id, bot_message )
     # send_telegram_message(efosa_telegram_id, bot_message)
     # send_telegram_message( bukunmi_telegram_id, bot_message )
     
-    bot_message = "Account balance at start of session: ${}".format(session_starting_balance)
-    send_telegram_message( kingsley_telegram_id, bot_message)
+    # bot_message = "Account balance at start of session: ${}".format(session_starting_balance)
+    # send_telegram_message( kingsley_telegram_id, bot_message)
     # send_telegram_message(efosa_telegram_id, bot_message)
     # send_telegram_message( bukunmi_telegram_id, bot_message )
     
@@ -346,6 +340,9 @@ def run_bot( deadline="06:00" ):
                 send_telegram_message( kingsley_telegram_id, bot_message)
                 # send_telegram_message(efosa_telegram_id, bot_message)
                 # send_telegram_message( bukunmi_telegram_id, bot_message )
+                
+                send_telegram_message(kingsley_telegram_id, "Account balance at start of session: ${}".format(session_starting_balance) )
+                # send_telegram_message(bukunmi_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
                 
                 send_telegram_message(kingsley_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
                 # send_telegram_message(efosa_telegram_id, "Account balance at end of session: ${}".format(session_ending_balance) )
@@ -395,9 +392,9 @@ send_telegram_image(kingsley_telegram_id, "out.png")
 
 while True:
     #Remember time(hour -1). 06:00:00 instead of 07:00:00
-    if time.strftime("%X") > '05:10:00':
+    if time.strftime("%X") > '03:27:00':
         #Remember time(hour -1). 18:00 instead of 19:00
-        database = run_bot( deadline="05:20" )
+        database = run_bot( deadline="03:40" )
         break
 
 driver.quit()
